@@ -1,0 +1,6 @@
+.container{
+    display:inline-flex;
+    height:70px;
+    width:100%;
+    justify-content: space-around;
+}
