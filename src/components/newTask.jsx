@@ -5,10 +5,10 @@ import React,{useState} from "react";
 function GetNewTask(){
     const [items,setItems]=useState([{
         toDo:"Wake up!",
-        Date:"26/07/2025"
+        Date:"2025-07-28"
     },{
         toDo:"Sleep!",
-        Date:"26/07/2025"
+        Date:"2025-07-28"
     }]);
     const [newTask,setNewTask]=useState("");
     const [taskDate,setTaskDate]=useState("");
@@ -19,7 +19,12 @@ function GetNewTask(){
         setTaskDate(event.target.value);
     }
     const handleAddTask=(event)=>{
+        if(newTask.trim()==="" || taskDate.trim()===""){
+           return alert("Both task and date are required!")
+        }
         setItems(i=>[...i,{toDo:newTask,Date:taskDate}]);
+        setNewTask("");
+        setTaskDate("")
     }
     const handleDelete=(index)=>{
         setItems(it=>it.filter((_,i)=> i!==index));

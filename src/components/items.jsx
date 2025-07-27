@@ -1,11 +1,10 @@
+import PropTypes from "prop-types"
 function DisplayItems(props){
     const items=props.items
     const itemList={
         display:"block",
         listStyle:"none"
     }
-    
-    
     const liStyle={
         display:"flex",
         margin:"3px",
@@ -28,4 +27,13 @@ function DisplayItems(props){
         </>
     )
 }
+DisplayItems.propTypes={
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      toDo: PropTypes.string.isRequired,
+      Date: PropTypes.string.isRequired
+    })
+  ).isRequired,
+  handleDelete: PropTypes.func.isRequired
+};
 export default DisplayItems;
