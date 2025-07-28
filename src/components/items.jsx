@@ -3,7 +3,7 @@ function DisplayItems(props){
     const items=props.items
     const itemList={
         display:"block",
-        listStyle:"none"
+        listStyle:"none",
     }
     const liStyle={
         display:"flex",
@@ -15,7 +15,7 @@ function DisplayItems(props){
 
     return(
         <>
-            <ul style={itemList}>
+            <ul style={itemList} className="mb-2">
                 {items.map((item,index)=>{
                     return(<li key={index} style={liStyle}>
                         <span className="content " style={{flex:"2",fontSize:"1.2em"}}>{item.toDo}</span>
