@@ -1,28 +1,22 @@
 import styles from "./newTask.module.css";
 import DisplayItems from "./items.jsx";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-function GetNewTask() {
-  const [items, setItems] = useState([
-    {
-      toDo: "Wake up!",
-      Date: "2025-07-28",
-    },
-    {
-      toDo: "Sleep!",
-      Date: "2025-07-28",
-    },
-  ]);
+
+function GetNewTask({ items, onAddTask, onDeleteTask }) {
   const [newTask, setNewTask] = useState("");
   const [taskDate, setTaskDate] = useState("");
+
   const handleNewTask = (event) => {
     setNewTask(event.target.value);
   };
+
   const handleTaskDate = (event) => {
     setTaskDate(event.target.value);
   };
-  const handleAddTask = (event) => {
+
+  const handleAddTask = () => {
     if (newTask.trim() === "" || taskDate.trim() === "") {
       return Swal.fire({
         icon: "warning",
@@ -30,41 +24,59 @@ function GetNewTask() {
         text: "Please enter both task and date.",
       });
     }
-    setItems((i) => [...i, { toDo: newTask, Date: taskDate }]);
+    onAddTask(newTask, taskDate);
     setNewTask("");
     setTaskDate("");
   };
-  const handleDelete = (index) => {
-    setItems((it) => it.filter((_, i) => i !== index));
-  };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Enter") {
+        handleAddTask();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [newTask, taskDate]);
+
   return (
     <>
       <div className={styles.container}>
         <input
           type="text"
           placeholder="Enter next item to do!"
-          className={`form-control m-2`}
+          className={styles.taskInput}
           id="newTask"
           value={newTask}
           onChange={handleNewTask}
         />
         <input
           type="date"
-          className={`form-control m-2`}
-          style={{ borderRadius: "5px" }}
+          className={styles.dateInput}
           id="newTaskDate"
           value={taskDate}
           onChange={handleTaskDate}
-        ></input>
-        <button
-          className={`form-control btn btn-primary m-2 d-flex justify-content-center align-items-center`}
-          onClick={handleAddTask}
-        >
-          Add
+        />
+        <button className={styles.addButton} onClick={handleAddTask}>
+          Add Task
         </button>
       </div>
-      <DisplayItems items={items} handleDelete={handleDelete} />
+      <DisplayItems items={items} handleDelete={onDeleteTask} />
     </>
   );
 }
+
+GetNewTask.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      toDo: PropTypes.string.isRequired,
+      Date: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onAddTask: PropTypes.func.isRequired,
+  onDeleteTask: PropTypes.func.isRequired,
+};
+
 export default GetNewTask;

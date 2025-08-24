@@ -1,4 +1,27 @@
-.Heading{
-    font-size: 2em;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+.headingContainer {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.Heading {
+  font-size: 2.5em;
+  font-weight: 700;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #10b981;
+  text-align: center;
+  margin-bottom: 15px;
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+  letter-spacing: 1px;
+  background: linear-gradient(45deg, #10b981, #34d399);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.taskCounter {
+  font-size: 1.1em;
+  color: rgba(16, 185, 129, 0.8);
+  font-weight: 500;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
 }
